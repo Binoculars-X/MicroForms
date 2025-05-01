@@ -9,13 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 	ProjectSection(SolutionItems) = preProject
-		..\.github\workflows\dotnet.yml = ..\.github\workflows\dotnet.yml
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{74FA0ADA-9881-443F-980C-C6B8638D393B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demo", "demo", "{5D1B820F-842C-4BAD-8D5F-99488C50174B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroForms.Tests", "tests\MicroForms.Tests\MicroForms.Tests.csproj", "{860E1DFA-A25B-424E-89E6-C10A21057445}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,12 +29,17 @@ Global
 		{C4BD657E-58B7-49F3-A6CF-0CA5756AF250}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4BD657E-58B7-49F3-A6CF-0CA5756AF250}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4BD657E-58B7-49F3-A6CF-0CA5756AF250}.Release|Any CPU.Build.0 = Release|Any CPU
+		{860E1DFA-A25B-424E-89E6-C10A21057445}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{860E1DFA-A25B-424E-89E6-C10A21057445}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{860E1DFA-A25B-424E-89E6-C10A21057445}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{860E1DFA-A25B-424E-89E6-C10A21057445}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C4BD657E-58B7-49F3-A6CF-0CA5756AF250} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{860E1DFA-A25B-424E-89E6-C10A21057445} = {74FA0ADA-9881-443F-980C-C6B8638D393B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A3FD98CE-A1FE-4A0C-AB38-1A0904F309D2}

@@ -8,4 +8,13 @@
     <AssemblyVersion>0.0.1.0</AssemblyVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Abstractions\FormListBase.cs" />
+    <Compile Remove="Builders\FormCardListTypeBuilder.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Parsers\" />
+  </ItemGroup>
+
 </Project>
