@@ -11,6 +11,8 @@
   <ItemGroup>
     <Compile Remove="Abstractions\FormListBase.cs" />
     <Compile Remove="Builders\FormCardListTypeBuilder.cs" />
+    <Compile Remove="Parser\ControlTypeExtensions.cs" />
+    <Compile Remove="Parser\FormDefinitionParser.cs" />
   </ItemGroup>
 
   <ItemGroup>
