@@ -16,6 +16,7 @@ public class FieldControlDetails: ContainerDetails
     //public string ModelTableBinding { get; set; }
     //public string ModelTargetBinding { get; set; }
 
+    public FormLayout Layout { get; set; }
     // new binding concept
     public FieldBinding Binding { get; set; }
 

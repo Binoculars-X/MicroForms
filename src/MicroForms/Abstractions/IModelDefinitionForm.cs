@@ -18,4 +18,6 @@ public interface IModelDefinitionForm
     Type ChildProcess { get; }
     //FormAllowAccess Access { get; }
     string ItemsPath { get; }
+
+    FormDetails GetFormDefinition();
 }

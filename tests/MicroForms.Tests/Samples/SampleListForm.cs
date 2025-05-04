@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MicroForms.Tests.Samples;
 
-public class SampleEditForm : Form<Model1>
+public class SampleEditForm : FormOld<Model1>
 {
     protected override void Define()
     {
@@ -17,7 +17,7 @@ public class SampleEditForm : Form<Model1>
     }
 }
 
-public class SampleListForm : Form<SampleListForm>
+public class SampleListForm : FormOld<SampleListForm>
 {
     public List<Model1> Data = [];
 
@@ -34,7 +34,7 @@ public class SampleQueryForm : Form<Model1>
 {
     protected override void Define()
     {
-        BuildFromQuery(LoadData, e =>
+        BuildListFromQuery(LoadData, e =>
         {
             e.Property(p => p.Id);
         });

@@ -1,28 +1,61 @@
-﻿using System;
+﻿using MicroForms.Builders;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MicroForms;
 
-public abstract class Form<TModel> : IModelDefinitionForm
+public abstract class Form : IModelDefinitionForm
+{
+    public string DisplayName => throw new NotImplementedException();
+
+    public Type ChildProcess => throw new NotImplementedException();
+
+    public string ItemsPath => throw new NotImplementedException();
+
+    public IEnumerable<DataField> GetDetailsFields()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Type GetDetailsType()
+    {
+        throw new NotImplementedException();
+    }
+
+    public virtual FormDetails GetFormDefinition()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public abstract class Form<TModel> : Form
     where TModel : class
 {
-    //protected readonly IDataFieldProcessor _dataFieldProcessor;
     protected FormEntityTypeBuilder<TModel> _builder;
     protected FormListBuilder<TModel> _builderList;
 
-    //private Dictionary<Type, string> _formats = new Dictionary<Type, string>()
-    //{
-    //    { typeof(DateTime), "dd/MM/yyyy" }
-    //    ,{ typeof(DateTime?), "dd/MM/yyyy" }
-    //};
+    protected ListFromQueryBuilder<TModel> _fromQueryBuilder;
+    public Func<QueryOptions, Task<IEnumerable<TModel>>> Query { get; internal set; }
+    public string DisplayName { get; private set; }
+    public Type ChildProcess { get; private set; }
+    public string ItemsPath { get; private set; }
+
+    /// <summary>
+    /// Should use Build or Columns (for List Form) methods to defind a form
+    /// </summary>
+    protected abstract void Define();
 
     public Form()
     {
         //_dataFieldProcessor = new DefaultDataFieldProcessor();
-        _builder = new FormEntityTypeBuilder<TModel>();
+        _builder = new();
+        _fromQueryBuilder = new();
         Define();
         _builder.AssertValid();
 
@@ -31,88 +64,46 @@ public abstract class Form<TModel> : IModelDefinitionForm
         //Access = _builder.Access;
     }
 
-    public string DisplayName { get; private set; }
-    public Type ChildProcess { get; private set; }
-    //public FormAllowAccess Access { get; private set; }
-    public string ItemsPath { get; private set; }
-    //protected abstract void Define(FormEntityTypeBuilder<TModel> builder);
-
     /// <summary>
-    /// Should use Build or Columns (for List Form) methods to defind a form
+    /// Returns all form definition
     /// </summary>
-    protected abstract void Define();
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public override FormDetails GetFormDefinition()
+    {
+        var form = new FormDetails();
+        return form;
+    }
+
+    protected void BuildListFromQuery(Func<QueryOptions, Task<IEnumerable<TModel>>> query,
+        [NotNull] Action<ListTypeBuilder<TModel>> buildAction)
+    {
+        Query = query;
+        _fromQueryBuilder.WithQuery(query, buildAction);
+    }
 
     protected void Build([NotNull] Action<FormEntityTypeBuilder<TModel>> buildAction)
     {
         buildAction(_builder);
     }
 
-    protected void BuildFromList<TKey>(Expression<Func<TModel, IEnumerable<TKey>>> items, 
-        [NotNull] Action<FormListTypeBuilder<TKey>> buildAction)
-        where TKey : class
-    {
-        _builderList.List(items, buildAction);
-    }
+    //protected void BuildList<TKey>(Expression<Func<TModel, IEnumerable<TKey>>> items,
+    //    [NotNull] Action<FormListTypeBuilder<TKey>> buildAction)
+    //    where TKey : class
+    //{
+    //    _builderList.List(items, buildAction);
+    //}
 
-    protected void BuildFromQuery<TKey>(Func<QueryOptions, Task<IEnumerable<TKey>>> query,
-        [NotNull] Action<FormListTypeBuilder<TKey>> buildAction)
-        where TKey : class
-    {
-        //_builderList.List(items, buildAction);
-    }
-
-    IEnumerable<DataField> IModelDefinitionForm.GetDetailsFields()
-    {
-        var fields = new List<DataField>();
-        fields.AddRange(_builder.Fields.OrderBy(f => f.Order));
-        var repeaterFields = _builder.RepeaterBuilders.SelectMany(r => r.Fields.OrderBy(f => f.Order));
-        fields.AddRange(repeaterFields);
-
-        if (fields.Any())
-        {
-            //_dataFieldProcessor.PrepareFields(fields.ToList(), GetDetailsType());
-        }
-
-        return fields;
-    }
 
     public Type GetDetailsType()
     {
-        return typeof(TModel);
+        throw new NotImplementedException();
     }
 
-    //public IEnumerable<DialogButtonDetails> GetButtons()
-    //{
-    //    var result = _builder.ActionButtons; 
-    //    return result;
-    //}
+    public IEnumerable<DataField> GetDetailsFields()
+    {
+        throw new NotImplementedException();
+    }
 
-    //public IEnumerable<IBindingFlowReference> GetButtonNavigations()
-    //{
-    //    var result = new List<IBindingFlowReference>();
-    //    return result;
-    //}
-
-    // ToDo: should it be moved to DataEntryProvider?
-    //public string GetFieldFormat(DataField field)
-    //{
-    //    var format = field.Format ?? FindDefaultFormat(field.DataType);
-    //    return format;
-    //}
-
-
-    //private string FindDefaultFormat(Type dataType)
-    //{
-    //    if (_formats.ContainsKey(dataType))
-    //    {
-    //        return _formats[dataType];
-    //    }
-
-    //    return "";
-    //}
-
-    //public IEnumerable<ActionRouteLink> GetContextLinks()
-    //{
-    //    return new List<ActionRouteLink>();
-    //}
+    
 }
