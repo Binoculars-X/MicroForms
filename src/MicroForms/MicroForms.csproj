@@ -10,7 +10,14 @@
 
   <ItemGroup>
     <Compile Remove="Abstractions\FormListBase.cs" />
+    <Compile Remove="Builders\FieldBuilder.cs" />
+    <Compile Remove="Builders\FormBuilderBase.cs" />
     <Compile Remove="Builders\FormCardListTypeBuilder.cs" />
+    <Compile Remove="Builders\FormEntityTypeBuilder.cs" />
+    <Compile Remove="Builders\FormListBuilder.cs" />
+    <Compile Remove="Builders\FormListTypeBuilder.cs" />
+    <Compile Remove="Builders\FormRepeaterTypeBuilder.cs" />
+    <Compile Remove="Builders\RepeaterFieldBuilder.cs" />
   </ItemGroup>
 
 </Project>

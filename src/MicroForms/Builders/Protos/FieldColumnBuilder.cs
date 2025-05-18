@@ -10,19 +10,19 @@ namespace MicroForms;
 
 public class FieldColumnBuilder
 {
-    protected DataField _field;
-    public DataField Field { get { return _field; } }
+    protected FieldControlDetails _field;
+    public FieldControlDetails Field { get { return _field; } }
 }
 
 public class FieldColumnBuilder<TProperty, TEntity> : FieldColumnBuilder where TEntity : class
 {
 
-    public FieldColumnBuilder(string bindingProperty)
-    {
-        _field = new DataField { BindingProperty = bindingProperty, DataType = typeof(TProperty).Name };
-    }
+    //public FieldColumnBuilder(string bindingProperty)
+    //{
+    //    _field = new DataField { BindingProperty = bindingProperty, DataType = typeof(TProperty).Name };
+    //}
 
-    public FieldColumnBuilder(DataField field)
+    public FieldColumnBuilder(FieldControlDetails field)
     {
         _field = field;
     }
@@ -36,64 +36,64 @@ public class FieldColumnBuilder<TProperty, TEntity> : FieldColumnBuilder where T
 
     public virtual FieldColumnBuilder<TProperty, TEntity> IsRequired(bool required = true)
     {
-        _field.Required = required;
+        _field.DisplayProperties.Required = required;
         return this;
     }
 
     public virtual FieldColumnBuilder<TProperty, TEntity> IsHidden(bool hidden = true)
     {
-        _field.Hidden = hidden;
+        _field.DisplayProperties.Visible = !hidden;
         return this;
     }
 
     public virtual FieldColumnBuilder<TProperty, TEntity> IsPrimaryKey(bool pk = true)
     {
-        _field.PrimaryKey = pk;
+        _field.DisplayProperties.IsPrimaryKey = pk;
         return this;
     }
 
     public virtual FieldColumnBuilder<TProperty, TEntity> IsReadOnly(bool readOnly = true)
     {
-        _field.ReadOnly = readOnly;
+        _field.DisplayProperties.Disabled = readOnly;
         return this;
     }
     public virtual FieldColumnBuilder<TProperty, TEntity> IsHighlighted(bool b = true)
     {
-        _field.Highlighted = b;
+        _field.DisplayProperties.Highlighted = b;
         return this;
     }
     public virtual FieldColumnBuilder<TProperty, TEntity> IsPassword(bool b = true)
     {
-        _field.Password = b;
+        _field.DisplayProperties.Password = b;
         return this;
     }
     public virtual FieldColumnBuilder<TProperty, TEntity> NoCaption(bool b = true)
     {
-        _field.NoCaption = b;
+        _field.DisplayProperties.NoCaption = b;
         return this;
     }
 
-    public virtual FieldColumnBuilder<TProperty, TEntity> IsUnique(bool unique = true)
-    {
-        _field.Unique = unique;
-        return this;
-    }
+    //public virtual FieldColumnBuilder<TProperty, TEntity> IsUnique(bool unique = true)
+    //{
+    //    _field.Unique = unique;
+    //    return this;
+    //}
 
     public virtual FieldColumnBuilder<TProperty, TEntity> Label(string label)
     {
-        _field.Label = label;
+        _field.Caption = label;
         return this;
     }
 
-    public virtual FieldColumnBuilder<TProperty, TEntity> MaxLength(int length)
-    {
-        _field.MaxLength = length;
-        return this;
-    }
+    //public virtual FieldColumnBuilder<TProperty, TEntity> MaxLength(int length)
+    //{
+    //    _field.MaxLength = length;
+    //    return this;
+    //}
 
     public virtual FieldColumnBuilder<TProperty, TEntity> Hint(string s)
     {
-        _field.Hint = s;
+        _field.DisplayProperties.Hint = s;
         return this;
     }
 
@@ -105,18 +105,18 @@ public class FieldColumnBuilder<TProperty, TEntity> : FieldColumnBuilder where T
 
     public virtual FieldColumnBuilder<TProperty, TEntity> Filter(FieldFilterType type)
     {
-        _field.FilterType = type;
+        _field.DisplayProperties.FilterType = type;
         return this;
     }
     public virtual FieldColumnBuilder<TProperty, TEntity> FilterRefField(string s)
     {
-        _field.FilterRefField = s;
+        _field.DisplayProperties.FilterRefField = s;
         return this;
     }
 
     public virtual FieldColumnBuilder<TProperty, TEntity> Format(string format)
     {
-        _field.Format = format;
+        _field.DisplayProperties.Format = format;
         return this;
     }
 
@@ -140,9 +140,9 @@ public class FieldColumnBuilder<TProperty, TEntity> : FieldColumnBuilder where T
     public class DropdownFieldColumnBuilder<TEntity2>
     {
         private FieldColumnBuilder<TProperty, TEntity> _parent;
-        private DataField _field;
+        private FieldControlDetails _field;
 
-        public DropdownFieldColumnBuilder(FieldColumnBuilder<TProperty, TEntity> parent, DataField field)
+        public DropdownFieldColumnBuilder(FieldColumnBuilder<TProperty, TEntity> parent, FieldControlDetails field)
         {
             _field = field;
             _parent = parent;
@@ -156,9 +156,9 @@ public class FieldColumnBuilder<TProperty, TEntity> : FieldColumnBuilder where T
             //_field.ControlType = typeof(DefaultDropdownControl);
             //_field.ViewModeControlType = typeof(DefaultDropdownReadonlyControl);
 
-            _field.SelectEntityType = typeof(TEntity2);
-            _field.SelectIdProperty = id.Body.ToString().ReplaceLambdaVar();
-            _field.SelectNameProperty = name.Body.ToString().ReplaceLambdaVar();
+            _field.DataTypeName = typeof(TEntity2).Name;
+            _field.Binding.IdBinding = id.Body.ToString().ReplaceLambdaVar();
+            _field.Binding.NameBinding = name.Body.ToString().ReplaceLambdaVar();
 
             return _parent;
         }

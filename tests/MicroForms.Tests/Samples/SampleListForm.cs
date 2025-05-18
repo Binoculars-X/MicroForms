@@ -6,29 +6,29 @@ using System.Threading.Tasks;
 
 namespace MicroForms.Tests.Samples;
 
-public class SampleEditForm : FormOld<Model1>
-{
-    protected override void Define()
-    {
-        Build(f => 
-        {
-            f.Property(f => f.Id);
-        });
-    }
-}
+//public class SampleEditForm : FormOld<Model1>
+//{
+//    protected override void Define()
+//    {
+//        Build(f => 
+//        {
+//            f.Property(f => f.Id);
+//        });
+//    }
+//}
 
-public class SampleListForm : FormOld<SampleListForm>
-{
-    public List<Model1> Data = [];
+//public class SampleListForm : FormOld<SampleListForm>
+//{
+//    public List<Model1> Data = [];
 
-    protected override void Define()
-    {
-        BuildFromList(p => p.Data, e =>
-        {
-            e.Property(p => p.Id);
-        });
-    }
-}
+//    protected override void Define()
+//    {
+//        BuildFromList(p => p.Data, e =>
+//        {
+//            e.Property(p => p.Id);
+//        });
+//    }
+//}
 
 public class SampleQueryForm : Form<Model1>
 {

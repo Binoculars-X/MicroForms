@@ -29,43 +29,6 @@ public class ListFromQueryBuilder<M>
     }
 }
 
-public abstract class BuilderBase
-{
-    protected readonly FieldControlDetails _formField;
-    protected Dictionary<string, FieldControlDetails> _fields = new();
-
-    public string DisplayName { get => _formField.Name; set => _formField.Name = value; }
-    public FormLayout Layout { get => _formField.Layout; set => _formField.Layout = value; }
-    public Type ChildProcess { get; set; }
-    //public FormAllowAccess Access { get; set; }
-
-    public IEnumerable<FieldControlDetails> Fields { get { return _fields.Values; } }
-
-
-    public BuilderBase()
-    {
-        var bindingProperty = ModelBinding.FormLevelBinding;
-
-        _formField = new FieldControlDetails
-        {
-            Binding = new FieldBinding 
-            { 
-                Binding = bindingProperty,
-                BindingType = FieldBindingType.Form,
-                BindingControlType = FieldBindingType.Form.ToString()
-            },
-            ControlType = ControlType.Form.ToString()
-        };
-
-        _fields[bindingProperty] = _formField;
-    }
-
-    public void AssertValid<TEntity>()
-    {
-        //RuleVirtualPropertyValidation.Validate<TEntity>(_fields.Values);
-    }
-}
-
 public abstract class ListTypeBuilder : BuilderBase
 {
     protected FieldColumnBuilder _FieldColumnBuilder;
@@ -105,12 +68,12 @@ public class ListTypeBuilder<TEntity> : ListTypeBuilder where TEntity : class
         resultField.Order = _propertyOrder;
 
         // Set binding types
-        resultField.TableBindingProperty = ItemsPath;
-        resultField.BindingType = FieldBindingType.TableColumn;
-        resultField.BindingControlType = BindingControlTypes.TableColumnBindingControlType;
+        resultField.Binding.TableBinding = ItemsPath;
+        resultField.Binding.BindingType = FieldBindingType.TableColumn;
+        resultField.Binding.BindingControlType = BindingControlTypes.TableColumnBindingControlType;
 
         // explicitly mentioned property is not hidden anymore
-        resultField.Hidden = false;
+        resultField.DisplayProperties.Visible = true;
         var result = new FieldColumnBuilder<TProperty, TEntity>(resultField);
         _FieldColumnBuilder = result;
 
@@ -121,19 +84,23 @@ public class ListTypeBuilder<TEntity> : ListTypeBuilder where TEntity : class
     {
         if (!_fields.ContainsKey(bindingProperty))
         {
-            _fields[bindingProperty] = new DataField
+            _fields[bindingProperty] = new FieldControlDetails
             {
-                BindingProperty = bindingProperty,
-                DataType = propertyType.Name
+                Binding = new FieldBinding
+                {
+                    Binding = bindingProperty,
+                },
+                //BindingProperty = bindingProperty,
+                DataTypeName = propertyType.Name
             };
         }
     }
 
-    public virtual void InlineButton(string text, string hint = null)
-    {
-        var bindingProperty = text;
-        _fields[bindingProperty] = new DataField { Button = true, BindingProperty = bindingProperty, Label = hint, BindingType = FieldBindingType.ActionButton };
-    }
+    //public virtual void InlineButton(string text, string hint = null)
+    //{
+    //    var bindingProperty = text;
+    //    _fields[bindingProperty] = new DataField { Button = true, BindingProperty = bindingProperty, Label = hint, BindingType = FieldBindingType.ActionButton };
+    //}
 
     public override void AssertValid()
     {

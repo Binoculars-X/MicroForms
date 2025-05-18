@@ -11,23 +11,23 @@ public class FieldBinding //: IFieldBinding, IFastReflectionBinding
 {
     public const string ColumnIndexMarker = "[__index]";
 
-    [JsonIgnore]
-    public Func<object, object> FastReflectionGetter { get; set; }
+    //[JsonIgnore]
+    //public Func<object, object> FastReflectionGetter { get; set; }
 
-    [JsonIgnore]
-    public Func<object, object> FastReflectionNameGetter { get; set; }
+    //[JsonIgnore]
+    //public Func<object, object> FastReflectionNameGetter { get; set; }
 
-    [JsonIgnore]
-    public Func<object, object> FastReflectionIdGetter { get; set; }
+    //[JsonIgnore]
+    //public Func<object, object> FastReflectionIdGetter { get; set; }
 
-    [JsonIgnore]
-    public Func<object, object> FastReflectionItemsGetter { get; set; }
+    //[JsonIgnore]
+    //public Func<object, object> FastReflectionItemsGetter { get; set; }
 
-    [JsonIgnore]
-    public Func<object, object> FastReflectionTableGetter { get; set; }
+    //[JsonIgnore]
+    //public Func<object, object> FastReflectionTableGetter { get; set; }
 
-    [JsonIgnore]
-    public Action<object, object> FastReflectionSetter { get; set; }
+    //[JsonIgnore]
+    //public Action<object, object> FastReflectionSetter { get; set; }
 
     public string Binding { get; set; }
 

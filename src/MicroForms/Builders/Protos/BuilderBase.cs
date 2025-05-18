@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MicroForms;
+namespace MicroForms.Builders;
 
-public abstract class FormBuilderBase
+public abstract class BuilderBase
 {
     protected readonly FieldControlDetails _formField;
-    protected Dictionary<string, FieldControlDetails> _fields = new ();
+    protected Dictionary<string, FieldControlDetails> _fields = new();
 
     public string DisplayName { get => _formField.Name; set => _formField.Name = value; }
     public FormLayout Layout { get => _formField.Layout; set => _formField.Layout = value; }
@@ -21,16 +21,19 @@ public abstract class FormBuilderBase
     public IEnumerable<FieldControlDetails> Fields { get { return _fields.Values; } }
 
 
-    public FormBuilderBase()
+    public BuilderBase()
     {
         var bindingProperty = ModelBinding.FormLevelBinding;
 
-        _formField = new DataField
+        _formField = new FieldControlDetails
         {
-            BindingProperty = bindingProperty,
-            BindingType = FieldBindingType.Form,
-            BindingControlType = FieldBindingType.Form.ToString(),
-            ControlTypeName = ControlType.Form.ToString()
+            Binding = new FieldBinding
+            {
+                Binding = bindingProperty,
+                BindingType = FieldBindingType.Form,
+                BindingControlType = FieldBindingType.Form.ToString()
+            },
+            ControlType = ControlType.Form.ToString()
         };
 
         _fields[bindingProperty] = _formField;
@@ -41,3 +44,4 @@ public abstract class FormBuilderBase
         //RuleVirtualPropertyValidation.Validate<TEntity>(_fields.Values);
     }
 }
+
