@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>MicroForms</id>
+    <version>0.0.1</version>
+    <authors>Binoculars X</authors>
+    <owners>Binoculars X</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <description>Low-code form builder with advanced rule engine and microflows support for microservices</description>
+    <copyright>Copyright (c) 2025 Binoculars X</copyright>
+    <tags>microservices fluent form builder blazor</tags>
+    <readme>readme.md</readme>
+    <projectUrl>https://github.com/Binoculars-X/MicroFlows</projectUrl>
+    <dependencies>
+		<group targetFramework="net9.0">
+          <dependency id="JsonPathToModel" version="2.0.0" />
+          <dependency id="Microsoft.Extensions.Configuration" version="8.0.0" />
+          <dependency id="Microsoft.Extensions.Logging.Abstractions" version="9.0.0" />
+          <dependency id="Microsoft.Data.SqlClient" version="6.0.1" />
+		</group>
+    </dependencies>
+    <contentFiles>
+      <files include="**\*.json" buildAction="None" />
+      <files include="**\*.cmd" buildAction="None" />
+      <files include="**\*.txt" buildAction="None" />
+      <files include="**\*.sql" buildAction="None" />
+    </contentFiles>
+  </metadata>
+  <files>
+    <file src="readme.md" />
+    <file src="..\bin\Release\net9.0\MicroForms.dll" target="lib\net9.0\MicroForms.dll" />
+  </files>
+</package>
