@@ -142,14 +142,14 @@ public class FieldBuilder<TProperty, TEntity> : FieldBuilder where TEntity : cla
     public virtual FieldBuilder<TProperty, TEntity> EditWithOptions<TKey, TKey2>(Expression<Func<TEntity, IEnumerable<TKey>>> items, 
         Expression<Func<TKey, TKey2>> name)
     {
-        _field.BindingControlType = BindingControlTypes.ListBindingControlType;
-        _field.BindingType = FieldBindingType.SingleField;
+        _field.Binding.BindingControlType = BindingControlTypes.ListBindingControlType;
+        _field.Binding.BindingType = FieldBindingType.SingleField;
         _field.ControlType = "Autocomplete";
         //_field.ViewModeControlType = typeof(DefaultDropdownReadonlyControl);
 
-        _field.SelectEntityType = typeof(TKey);
-        _field.SelectItemsProperty = items.Body.ToString().ReplaceLambdaVar();
-        _field.SelectNameProperty = name.Body.ToString().ReplaceLambdaVar();
+        _field.DataTypeName = typeof(TKey).Name;
+        _field.Binding.ItemsBinding = items.Body.ToString().ReplaceLambdaVar();
+        _field.Binding.NameBinding = name.Body.ToString().ReplaceLambdaVar();
 
         return this;
     }
